@@ -1,7 +1,10 @@
 package com.company;
 
+
 import java.util.Random;
 import java.util.Scanner;
+
+
 
 class Main {
     public static void main(String[] args) {
@@ -14,11 +17,14 @@ class Main {
         int DEAD = 2;
         int MISS = 3;
         int MAX_COUNT = 10;
-        int hod = 0;
+        int countship = 10;
+        int countHod = MAX_COUNT;
+
         System.out.println();
         System.out.println("Игра морской бой");
         System.out.println("Заполнение кораблей.....");
         System.out.println();
+
         for (int i = 0; i < MAX_COUNT; i++) {
             int shipPlace1 = random.nextInt(SIZE);
             int shipPlace2 = random.nextInt(SIZE);
@@ -27,6 +33,7 @@ class Main {
                 i--;
             }
             warField[shipPlace1][shipPlace2] = SHIP;
+
         }
         for (int i = 0; i< SIZE; i++) {
             for (int j = 0; j< SIZE; j++) {
@@ -34,19 +41,35 @@ class Main {
             }
             System.out.println();
         }
-        for (int i = 30; i > hod; i--){
-            System.out.println("Введите координаты для атаки (осталось" + i + ")");
-            int x = scanner.nextInt();
-            int y = scanner.nextInt();
-            if(x == DEAD){
-                System.out.println("Попал");
-            }else{
-                System.out.println("Промох");
+        while (true){
+            System.out.println("Введите координаты для атаки (осталось"+ "" + countHod + ")");
+            countHod--;
+            System.out.println("Введите кординату x:");
+            int x = scanner.nextInt() - 1;
+            System.out.println("Введите кординату y:");
+            int y = scanner.nextInt() - 1;
+            if (warField[x][y] == SHIP) {
+                System.out.println("убил");
+                warField[x][y] = DEAD;
+                countship --;
+            }else {
+                System.out.println("Промах");
+                warField[x][y] = MISS;
             }
-            if (i == 1){
-                System.out.println("Вы проиграли ");
+            if(countship == 0){
+                System.out.println("Победа");
+                break;
+            }
+            if (countHod == 0){
+                System.out.println("Проиграл");
+                break;
+            }
+            for (int i = 0; i< SIZE; i++) {
+                for (int j = 0; j< SIZE; j++) {
+                    System.out.print(warField[i][j]);
+                }
+                System.out.println();
             }
         }
-
     }
 }
